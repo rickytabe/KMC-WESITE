@@ -1,368 +1,485 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KMC Fast Food | Authentic Buea Cuisine & Burgers</title>
-    <meta name="description" content="Experience Buea's best fast food at KMC Restaurant. Family recipes since 2015. Book tables online, enjoy quick service & premium ingredients.">
-    
+    <meta
+      name="description"
+      content="Experience Buea's best fast food at KMC Restaurant. Family recipes since 2015. Book tables online, enjoy quick service & premium ingredients."
+    />
+
     <!-- Preload critical resources -->
-    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
-    
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script" />
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      as="style"
+    />
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <!-- Custom CSS -->
     <style>
-        @layer utilities {
-            .text-shadow {
-                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            }
-
-            @keyframes fade-in-down {
-                0% { opacity: 0; transform: translateY(-20px); }
-                100% { opacity: 1; transform: translateY(0); }
-            }
-
-            .animate-fade-in-down {
-                animation: fade-in-down 0.8s ease-out;
-            }
-
-            .hover-scale {
-                transition: transform 0.3s ease;
-            }
-
-            .hover-scale:hover {
-                transform: scale(1.03);
-            }
-
-            .nav-link.active {
-                @apply text-red-600 relative;
-            }
-
-            .nav-link.active:after {
-                @apply absolute bottom-0 left-0 w-full h-0.5 bg-red-600;
-                content: '';
-            }
-
-            .cta-primary {
-                @apply bg-red-600 text-white px-8 py-3 rounded-full hover:bg-red-700 
-                       transition-all duration-300 inline-flex items-center justify-center;
-            }
-
-            .cta-secondary {
-                @apply border-2 border-red-600 text-red-600 px-8 py-3 rounded-full 
-                       hover:bg-red-600 hover:text-white transition-all duration-300;
-            }
+      @layer utilities {
+        .text-shadow {
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
+
+        @keyframes fade-in-down {
+          0% {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in-down {
+          animation: fade-in-down 0.8s ease-out;
+        }
+
+        .hover-scale {
+          transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+          transform: scale(1.03);
+        }
+
+        .nav-link.active {
+          @apply text-red-600 relative;
+        }
+
+        .nav-link.active:after {
+          @apply absolute bottom-0 left-0 w-full h-0.5 bg-red-600;
+          content: "";
+        }
+
+        .cta-primary {
+          @apply bg-red-600 text-white px-8 py-3 rounded-full hover:bg-red-700 
+                       transition-all duration-300 inline-flex items-center justify-center;
+        }
+
+        .cta-secondary {
+          @apply border-2 border-red-600 text-red-600 px-8 py-3 rounded-full 
+                       hover:bg-red-600 hover:text-white transition-all duration-300;
+        }
+      }
     </style>
-</head>
-<body class="bg-gray-50">
+  </head>
+  <body class="bg-gray-50">
     <!-- Navigation -->
     <header class="sticky top-0 bg-white shadow-sm z-50">
-        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold text-red-600 flex items-center" aria-label="KMC Home">
-                <i class="fas fa-utensils text-red-600 mr-2"></i>
-                KMC
-            </a>
+      <nav
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <a
+          href="/"
+          class="text-2xl font-bold text-red-600 flex items-center"
+          aria-label="KMC Home"
+        >
+          <i class="fas fa-utensils text-red-600 mr-2"></i>
+          KMC
+        </a>
 
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-8 text-lg">
-                <a href="/" class="nav-link group" data-path="/">
-                    <i class="fas fa-home mr-2"></i>Home
-                </a>
-                <a href="/menu" class="nav-link group" data-path="/menu">
-                    <i class="fas fa-book-open mr-2"></i>Menu
-                </a>
-                <a href="/reservations" class="nav-link group" data-path="/reservations">
-                    <i class="fas fa-calendar-check mr-2"></i>Reservations
-                </a>
-                <a href="/about" class="nav-link group" data-path="/about">
-                    <i class="fas fa-info-circle mr-2"></i>About
-                </a>
-            </div>
-
-            <!-- Cart & Mobile Menu -->
-            <div class="flex items-center gap-6">
-                <button id="cartButton" class="text-gray-600 hover:text-red-600 relative">
-                    <i class="fas fa-shopping-cart text-xl"></i>
-                    <span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">0</span>
-                </button>
-                <button id="mobileMenuBtn" class="md:hidden text-gray-600" aria-label="Open menu">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-            </div>
-        </nav>
-
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
-            <div class="container mx-auto px-4 py-4 space-y-2">
-                <a href="/" class="nav-link block py-2" data-path="/">
-                    <i class="fas fa-home mr-3"></i>Home
-                </a>
-                <a href="/menu" class="nav-link block py-2" data-path="/menu">
-                    <i class="fas fa-book-open mr-3"></i>Menu
-                </a>
-                <a href="/reservations" class="nav-link block py-2" data-path="/reservations">
-                    <i class="fas fa-calendar-check mr-3"></i>Reservations
-                </a>
-                <a href="/about" class="nav-link block py-2" data-path="/about">
-                    <i class="fas fa-info-circle mr-3"></i>About
-                </a>
-            </div>
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-8 text-lg">
+          <a href="/" class="nav-link group" data-path="/">
+            <i class="fas fa-home mr-2"></i>Home
+          </a>
+          <a href="/menu" class="nav-link group" data-path="/menu">
+            <i class="fas fa-book-open mr-2"></i>Menu
+          </a>
+          <a
+            href="/reservations"
+            class="nav-link group"
+            data-path="/reservations"
+          >
+            <i class="fas fa-calendar-check mr-2"></i>Reservations
+          </a>
+          <a href="/about" class="nav-link group" data-path="/about">
+            <i class="fas fa-info-circle mr-2"></i>About
+          </a>
         </div>
+
+        <!-- Cart & Mobile Menu -->
+        <div class="flex items-center gap-6">
+          <button
+            id="cartButton"
+            class="text-gray-600 hover:text-red-600 relative"
+          >
+            <i class="fas fa-shopping-cart text-xl"></i>
+            <span
+              id="cartCount"
+              class="absolute -top-2 -right-3 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"
+              >0</span
+            >
+          </button>
+          <button
+            id="mobileMenuBtn"
+            class="md:hidden text-gray-600"
+            aria-label="Open menu"
+          >
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 space-y-2">
+          <a href="/" class="nav-link block py-2" data-path="/">
+            <i class="fas fa-home mr-3"></i>Home
+          </a>
+          <a href="/menu" class="nav-link block py-2" data-path="/menu">
+            <i class="fas fa-book-open mr-3"></i>Menu
+          </a>
+          <a
+            href="/reservations"
+            class="nav-link block py-2"
+            data-path="/reservations"
+          >
+            <i class="fas fa-calendar-check mr-3"></i>Reservations
+          </a>
+          <a href="/about" class="nav-link block py-2" data-path="/about">
+            <i class="fas fa-info-circle mr-3"></i>About
+          </a>
+        </div>
+      </div>
     </header>
 
     <main>
-        <!-- Hero Section -->
-        <section class="relative h-[600px] flex items-center">
-            <div class="absolute inset-0 bg-black/50">
-                <img src="https://images.unsplash.com/photo-1550547660-d9450f859349" 
-                     alt="KMC Restaurant interior"
-                     class="w-full h-full object-cover"
-                     loading="lazy">
+      <!-- Hero Section -->
+      <section class="relative h-[600px] flex items-center">
+        <div class="absolute inset-0 bg-black/50">
+          <img
+            src="https://images.unsplash.com/photo-1550547660-d9450f859349"
+            alt="KMC Restaurant interior"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <div
+          class="container mx-auto px-4 text-center relative z-10 text-white"
+        >
+          <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in-down">
+            Taste Buea's Authentic Flavors
+          </h1>
+          <p class="text-xl mb-8 font-light max-w-2xl mx-auto">
+            Family recipes perfected since 2015
+          </p>
+          <div class="flex flex-col md:flex-row justify-center gap-4">
+            <a href="/menu" class="cta-primary"> Explore Menu </a>
+            <a href="/reservations" class="cta-secondary"> Book Table </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Dishes -->
+      <section class="container mx-auto px-4 py-16" id="menu">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4">Our Deli Masterpieces</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto mb-6">
+            Discover handcrafted delights that define the KMC experience
+          </p>
+          <div class="flex flex-wrap justify-center gap-4 mb-8">
+            <button
+              data-filter="all"
+              class="filter-btn active px-6 py-2 rounded-full bg-red-600 text-white"
+            >
+              All Specialties
+            </button>
+            <button
+              data-filter="burger"
+              class="filter-btn px-6 py-2 rounded-full bg-gray-200 hover:bg-red-600 hover:text-white"
+            >
+              Burgers
+            </button>
+            <button
+              data-filter="side"
+              class="filter-btn px-6 py-2 rounded-full bg-gray-200 hover:bg-red-600 hover:text-white"
+            >
+              Sides & Drinks
+            </button>
+            <button
+              data-filter="local"
+              class="filter-btn px-6 py-2 rounded-full bg-gray-200 hover:bg-red-600 hover:text-white"
+            >
+              Local Specials
+            </button>
+          </div>
+        </div>
+        <div id="dishes-container" class="grid md:grid-cols-3 gap-8"></div>
+      </section>
+
+      <!-- About Section -->
+      <section class="bg-white py-16" id="about">
+        <div class="container mx-auto px-4">
+          <div
+            class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center"
+          >
+            <div
+              class="relative rounded-2xl overflow-hidden shadow-xl hover-scale"
+            >
+              <img
+                src="/assets/images/founder.jpg"
+                alt="Chef Arrey-Mbo"
+                class="w-full h-96 object-cover"
+                loading="lazy"
+              />
             </div>
-            
-            <div class="container mx-auto px-4 text-center relative z-10 text-white">
-                <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in-down">
-                    Taste Buea's Authentic Flavors
-                </h1>
-                <p class="text-xl mb-8 font-light max-w-2xl mx-auto">
-                    Family recipes perfected since 2015
+            <div>
+              <h2 class="text-3xl font-bold mb-6">Our Culinary Journey</h2>
+              <p class="text-gray-600 mb-6">
+                What began as a small family eatery in 2015 has blossomed into
+                Buea's premier fast food destination. Founded by Chef Arrey-Mbo,
+                KMC combines traditional Cameroonian recipes with modern
+                culinary techniques.
+              </p>
+              <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                  <div
+                    class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center"
+                  >
+                    <i class="fas fa-seedling text-red-600"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-bold mb-2">Local Sourcing</h3>
+                    <p class="text-gray-600">
+                      Partnering with Buea farmers and markets since day one
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div
+                    class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center"
+                  >
+                    <i class="fas fa-award text-red-600"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-bold mb-2">Awards</h3>
+                    <p class="text-gray-600">
+                      Best Fast Food Restaurant 2022 & 2023 (Buea Food Awards)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="bg-gray-50 py-16">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12">Voices from Buea</h2>
+          <div class="testimonial-slider">
+            <div class="testimonial active">
+              <div
+                class="bg-white rounded-xl p-8 shadow-lg max-w-2xl mx-auto hover-scale"
+              >
+                <div class="flex items-center mb-6">
+                  <img
+                    src="/assets/images/testimonial-1.jpg"
+                    alt="Sarah T."
+                    class="w-16 h-16 rounded-full object-cover"
+                  />
+                  <div class="ml-4">
+                    <h4 class="font-bold">Sarah T.</h4>
+                    <p class="text-gray-600">University Student</p>
+                    <div class="flex text-yellow-400 mt-1">
+                      <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-gray-600 italic">
+                  "The ndolé here tastes just like my grandmother's! KMC has
+                  become our weekly treat."
                 </p>
-                <div class="flex flex-col md:flex-row justify-center gap-4">
-                    <a href="/menu" class="cta-primary">
-                        Explore Menu
-                    </a>
-                    <a href="/reservations" class="cta-secondary">
-                        Book Table
-                    </a>
-                </div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <!-- Featured Dishes -->
-        <section class="container mx-auto px-4 py-16" id="menu">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4">Our Deli Masterpieces</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto mb-6">
-                    Discover handcrafted delights that define the KMC experience
-                </p>
-                <div class="flex flex-wrap justify-center gap-4 mb-8">
-                    <button data-filter="all" class="filter-btn active px-6 py-2 rounded-full bg-red-600 text-white">
-                        All Specialties
-                    </button>
-                    <button data-filter="burger" class="filter-btn px-6 py-2 rounded-full bg-gray-200 hover:bg-red-600 hover:text-white">
-                        Burgers
-                    </button>
-                    <button data-filter="side" class="filter-btn px-6 py-2 rounded-full bg-gray-200 hover:bg-red-600 hover:text-white">
-                        Sides & Drinks
-                    </button>
-                    <button data-filter="local" class="filter-btn px-6 py-2 rounded-full bg-gray-200 hover:bg-red-600 hover:text-white">
-                        Local Specials
-                    </button>
-                </div>
+      <!-- USP Section -->
+      <section class="bg-gray-50 py-16">
+        <div class="container mx-auto px-4">
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center p-6 hover-scale">
+              <div
+                class="bg-red-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+              >
+                <i class="fas fa-leaf text-white text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Fresh Ingredients</h3>
+              <p class="text-gray-600">
+                Locally sourced produce daily from Buea markets
+              </p>
             </div>
-            <div id="dishes-container" class="grid md:grid-cols-3 gap-8"></div>
-        </section>
-
-        <!-- About Section -->
-        <section class="bg-white py-16" id="about">
-            <div class="container mx-auto px-4">
-                <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-                    <div class="relative rounded-2xl overflow-hidden shadow-xl hover-scale">
-                        <img src="/assets/images/founder.jpg" 
-                             alt="Chef Arrey-Mbo" 
-                             class="w-full h-96 object-cover"
-                             loading="lazy">
-                    </div>
-                    <div>
-                        <h2 class="text-3xl font-bold mb-6">Our Culinary Journey</h2>
-                        <p class="text-gray-600 mb-6">
-                            What began as a small family eatery in 2015 has blossomed into Buea's premier fast food destination. 
-                            Founded by Chef Arrey-Mbo, KMC combines traditional Cameroonian recipes with modern culinary techniques.
-                        </p>
-                        <div class="space-y-6">
-                            <div class="flex items-start gap-4">
-                                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-seedling text-red-600"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-bold mb-2">Local Sourcing</h3>
-                                    <p class="text-gray-600">Partnering with Buea farmers and markets since day one</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-award text-red-600"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-bold mb-2">Awards</h3>
-                                    <p class="text-gray-600">Best Fast Food Restaurant 2022 & 2023 (Buea Food Awards)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="text-center p-6 hover-scale">
+              <div
+                class="bg-red-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+              >
+                <i class="fas fa-clock text-white text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Quick Service</h3>
+              <p class="text-gray-600">Average serving time under 15 minutes</p>
             </div>
-        </section>
-
-        <!-- Testimonials -->
-        <section class="bg-gray-50 py-16">
-            <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-12">Voices from Buea</h2>
-                <div class="testimonial-slider">
-                    <div class="testimonial active">
-                        <div class="bg-white rounded-xl p-8 shadow-lg max-w-2xl mx-auto hover-scale">
-                            <div class="flex items-center mb-6">
-                                <img src="/assets/images/testimonial-1.jpg" 
-                                     alt="Sarah T." 
-                                     class="w-16 h-16 rounded-full object-cover">
-                                <div class="ml-4">
-                                    <h4 class="font-bold">Sarah T.</h4>
-                                    <p class="text-gray-600">University Student</p>
-                                    <div class="flex text-yellow-400 mt-1">
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-gray-600 italic">
-                                "The ndolé here tastes just like my grandmother's! KMC has become our weekly treat."
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <div class="text-center p-6 hover-scale">
+              <div
+                class="bg-red-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+              >
+                <i class="fas fa-award text-white text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Award Winning</h3>
+              <p class="text-gray-600">Best Fast Food Restaurant 2022 & 2023</p>
             </div>
-        </section>
-
-        <!-- USP Section -->
-        <section class="bg-gray-50 py-16">
-            <div class="container mx-auto px-4">
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="text-center p-6 hover-scale">
-                        <div class="bg-red-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-leaf text-white text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Fresh Ingredients</h3>
-                        <p class="text-gray-600">Locally sourced produce daily from Buea markets</p>
-                    </div>
-                    <div class="text-center p-6 hover-scale">
-                        <div class="bg-red-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-clock text-white text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Quick Service</h3>
-                        <p class="text-gray-600">Average serving time under 15 minutes</p>
-                    </div>
-                    <div class="text-center p-6 hover-scale">
-                        <div class="bg-red-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-award text-white text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Award Winning</h3>
-                        <p class="text-gray-600">Best Fast Food Restaurant 2022 & 2023</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+          </div>
+        </div>
+      </section>
     </main>
+    <!-- Before Footer -->
+    <section class="container mx-auto px-4 py-12">
+      <div class="bg-gray-100 rounded-xl p-8 text-center">
+        <h3 class="text-2xl font-bold mb-4">Find Us in Buea</h3>
+        <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15482.055803412439!2d9.268205487158191!3d4.156637599999993!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1061310030f1fc65%3A0x103b022538ca18e9!2sKMC%20ORIGINALLY%20BUEA!5e1!3m2!1sen!2sus!4v1748388382158!5m2!1sen!2sus"
+            width="600"
+            height="450"
+            class="w-full h-full"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <p class="mt-4 text-gray-600">
+          <i class="fas fa-trophy text-red-600"></i>
+          #1 Fast Food Restaurant in Buea (Google Reviews)
+        </p>
+      </div>
+    </section>
 
     <!-- Cart Modal -->
     <div id="cartModal" class="fixed inset-0 bg-black/50 hidden z-50">
-        <div class="bg-white max-w-md w-full mx-auto mt-12 rounded-xl shadow-2xl">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-bold">Your Order</h3>
-                    <button id="closeCart" class="text-2xl hover:text-red-600">&times;</button>
-                </div>
-                
-                <div id="cartItems" class="space-y-4 mb-6"></div>
-                
-                <div class="border-t pt-4">
-                    <div class="flex justify-between mb-4">
-                        <span class="font-bold">Total:</span>
-                        <span id="cartTotal" class="font-bold">0 XAF</span>
-                    </div>
-                    <form id="checkoutForm" class="space-y-4">
-                        <div>
-                            <label class="block mb-2">Card Details</label>
-                            <div id="cardElement" class="p-2 border rounded-lg"></div>
-                        </div>
-                        <button type="submit" class="cta-primary w-full">
-                            Pay Now (XAF <span id="payAmount">0</span>)
-                        </button>
-                    </form>
-                </div>
+      <div class="bg-white max-w-md w-full mx-auto mt-12 rounded-xl shadow-2xl">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold">Your Order</h3>
+            <button id="closeCart" class="text-2xl hover:text-red-600">
+              &times;
+            </button>
+          </div>
+
+          <div id="cartItems" class="space-y-4 mb-6"></div>
+
+          <div class="border-t pt-4">
+            <div class="flex justify-between mb-4">
+              <span class="font-bold">Total:</span>
+              <span id="cartTotal" class="font-bold">0 XAF</span>
             </div>
+            <form id="checkoutForm" class="space-y-4">
+              <div>
+                <label class="block mb-2">Card Details</label>
+                <div id="cardElement" class="p-2 border rounded-lg"></div>
+              </div>
+              <button type="submit" class="cta-primary w-full">
+                Pay Now (XAF <span id="payAmount">0</span>)
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white pt-12 pb-8">
-        <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <h4 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-utensils mr-2 text-red-500"></i>
-                        KMC Restaurant
-                    </h4>
-                    <p class="text-gray-400">Bringing Buea's best flavors since 2015</p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-bold mb-4">Contact</h4>
-                    <ul class="space-y-2">
-                        <li class="flex items-center">
-                            <i class="fas fa-map-marker-alt mr-3 text-red-500"></i>
-                            Buea Town, SW Region
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone-alt mr-3 text-red-500"></i>
-                            (+237) 671-353-341
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-bold mb-4">Hours</h4>
-                    <ul class="space-y-2">
-                        <li>Mon-Fri: 8AM - 10PM</li>
-                        <li>Saturday: 9AM - 11PM</li>
-                        <li>Sunday: 10AM - 9PM</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-bold mb-4">Connect</h4>
-                    <div class="flex space-x-4">
-                        <a href="https://facebook.com/kmcrestaurant" class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://instagram.com/kmcrestaurant" class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://wa.me/237671353341" class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                </div>
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <h4 class="text-xl font-bold mb-4 flex items-center">
+              <i class="fas fa-utensils mr-2 text-red-500"></i>
+              KMC Restaurant
+            </h4>
+            <p class="text-gray-400">Bringing Buea's best flavors since 2015</p>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold mb-4">Contact</h4>
+            <ul class="space-y-2">
+              <li class="flex items-center">
+                <i class="fas fa-map-marker-alt mr-3 text-red-500"></i>
+                Buea Town, SW Region
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-phone-alt mr-3 text-red-500"></i>
+                (+237) 671-353-341
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold mb-4">Hours</h4>
+            <ul class="space-y-2">
+              <li>Mon-Fri: 8AM - 10PM</li>
+              <li>Saturday: 9AM - 11PM</li>
+              <li>Sunday: 10AM - 9PM</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold mb-4">Connect</h4>
+            <div class="flex space-x-4">
+              <a
+                href="https://facebook.com/kmcrestaurant"
+                class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700"
+              >
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a
+                href="https://instagram.com/kmcrestaurant"
+                class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a
+                href="https://wa.me/237671353341"
+                class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700"
+              >
+                <i class="fab fa-whatsapp"></i>
+              </a>
             </div>
-            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 KMC Restaurant. All rights reserved.</p>
-            </div>
+          </div>
         </div>
+        <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+          <p>&copy; 2024 KMC Restaurant. All rights reserved.</p>
+        </div>
+      </div>
     </footer>
 
     <!-- WhatsApp Float -->
-    <a href="https://wa.me/237671353341" 
-       class="fixed bottom-4 right-4 bg-red-600 text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-colors"
-       aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp text-xl"></i>
+    <a
+      href="https://wa.me/237671353341"
+      class="fixed bottom-4 right-4 bg-red-600 text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-colors"
+      aria-label="Chat on WhatsApp"
+    >
+      <i class="fab fa-whatsapp text-xl"></i>
     </a>
 
     <!-- Stripe.js -->
     <script src="https://js.stripe.com/v3/"></script>
     <script src="main.js"></script>
-</body>
+  </body>
 </html>
