@@ -28,20 +28,23 @@
     transform: scale(1.03);
 }
 
-/* Active navigation link */
-.nav-link.active {
-    color: #dc2626; /* red-600 */
+/* Active link styling */
+.nav-link {
     position: relative;
 }
 
-.nav-link.active:after {
-    content: "";
+.nav-link.active {
+    color: #dc2626; /* red-600 */
+}
+
+.nav-link.active::after {
+    content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: #dc2626; /* red-600 */
+    background-color: #dc2626;
 }
 
 /* Primary CTA Button */

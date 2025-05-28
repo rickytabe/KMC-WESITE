@@ -1,0 +1,8 @@
+MENU.
+ 1) Nav to all parts of the website at the top.
+ 2)Title and subtitle
+ 3) Search Bar and filters
+ 4) Dishes for the day (available on the Go)
+ 5) other dishes and junk food the restaurant offers
+ 6) recommend other things that the menu of a proffessional restuarant should have
+ 7) Footer

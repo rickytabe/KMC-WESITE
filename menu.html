@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KMC Fast Food | Menu</title>
+    <meta
+      name="description"
+      content="Explore KMC's full menu - authentic Buea cuisine, burgers, daily specials and combo meals. Order online or reserve a table."
+    />
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script" />
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      as="style"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+   <link rel="stylesheet" href="styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+      .menu-category { display: none; }
+      .menu-category.active { display: block; }
+      .menu-tab.active {
+        border-bottom: 3px solid #dc2626;
+        color: #dc2626;
+      }
+    </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Navigation -->
+  <header class="sticky top-0 shadow-sm z-50 bg-red-200 ">
+    <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="/" class="text-2xl font-bold text-red-600 flex items-center" aria-label="KMC Home">
+        <i class="fas fa-utensils text-red-600 mr-2"></i>
+        KMC
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-8 text-lg">
+        <a href="index.html" class="nav-link group">
+          <i class="fas fa-home mr-2"></i>
+          <span>Home</span>
+        </a>
+        <a href="menu.html" class="nav-link group active">
+          <i class="fas fa-book-open mr-2"></i>
+          <span>Menu</span>
+        </a>
+        <a href="reservations.html" class="nav-link group">
+          <i class="fas fa-calendar-check mr-2"></i>
+          <span>Reservations</span>
+        </a>
+        <a href="about.html" class="nav-link group">
+          <i class="fas fa-info-circle mr-2"></i>
+          <span>About</span>
+        </a>
+      </div>
+
+      <!-- Cart & Mobile Menu -->
+      <div class="flex items-center gap-6">
+        <button id="cartButton" class="text-gray-600 hover:text-red-600 relative">
+          <i class="fas fa-shopping-cart text-xl"></i>
+          <span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">0</span>
+        </button>
+
+        <button id="mobileMenuBtn" class="md:hidden text-gray-600" aria-label="Open menu" aria-expanded="false">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
+      <div class="container mx-auto px-4 py-4 space-y-2">
+        <a href="index.html" class="nav-link block py-2" data-path="/">
+          <i class="fas fa-home mr-3"></i>Home
+        </a>
+        <a href="menu.html" class="nav-link block py-2 active" data-path="/menu">
+          <i class="fas fa-book-open mr-3"></i>Menu
+        </a>
+        <a href="reservations.html" class="nav-link block py-2" data-path="/reservations">
+          <i class="fas fa-calendar-check mr-3"></i>Reservations
+        </a>
+        <a href="about.html" class="nav-link block py-2" data-path="/about">
+          <i class="fas fa-info-circle mr-3"></i>About
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Menu Hero -->
+    <section class="relative h-[400px] flex items-center">
+      <div class="absolute inset-0">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+        <img
+          src="https://i.pinimg.com/736x/96/22/88/962288e6948dfa95befab6be1684ed4c.jpg"
+          alt="KMC Menu Background"
+          class="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="container mx-auto px-4 text-center relative z-10 text-white">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-header">
+          Our <span class="bg-red-600 p-2 rounded-lg">Menu</span>
+        </h1>
+      </div>
+    </section>
+
+    <!-- Search & Filters -->
+    <section class="container mx-auto px-4 py-8 -mt-10 z-10 relative">
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <!-- Search -->
+        <div class="mb-6">
+          <label for="menu-search" class="sr-only">Search menu</label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="menu-search" 
+              class="w-full p-4 pl-12 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500" 
+              placeholder="Search dishes..."
+            >
+            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Category Filter -->
+          <div>
+            <h3 class="font-bold mb-3">Categories</h3>
+            <div class="space-y-2">
+              <button class="filter-category w-full text-left px-4 py-2 rounded-lg bg-red-600 text-white" data-category="all">
+                All Items
+              </button>
+              <button class="filter-category w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200" data-category="specials">
+                Today's Specials
+              </button>
+              <button class="filter-category w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200" data-category="combos">
+                Combos & Meals
+              </button>
+              <button class="filter-category w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200" data-category="burgers">
+                Burgers & Sandwiches
+              </button>
+              <button class="filter-category w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200" data-category="local">
+                Local Specialties
+              </button>
+              <button class="filter-category w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200" data-category="sides">
+                Sides & Drinks
+              </button>
+              <button class="filter-category w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200" data-category="desserts">
+                Desserts
+              </button>
+            </div>
+          </div>
+
+          <!-- Price Filter -->
+          <div>
+            <h3 class="font-bold mb-3">Price Range</h3>
+            <div class="px-2">
+              <input 
+                type="range" 
+                id="price-range" 
+                min="500" 
+                max="10000" 
+                value="5000" 
+                step="500"
+                class="w-full"
+              >
+              <div class="flex justify-between mt-2 text-sm">
+                <span>500 XAF</span>
+                <span id="price-value">5000 XAF</span>
+                <span>10000 XAF</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dietary Filters -->
+          <div>
+            <h3 class="font-bold mb-3">Dietary</h3>
+            <div class="space-y-2">
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-red-600" data-filter="vegetarian">
+                <span class="ml-2">Vegetarian</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-red-600" data-filter="vegan">
+                <span class="ml-2">Vegan</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-red-600" data-filter="gluten-free">
+                <span class="ml-2">Gluten-Free</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Today's Specials -->
+    <section class="container mx-auto px-4 py-12">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold mb-2">Today's Specials</h2>
+        <div class="w-20 h-1 bg-red-600 mx-auto"></div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8" id="specials-container">
+        <!-- Specials will be loaded via JS -->
+      </div>
+    </section>
+
+    <!-- Menu Categories -->
+    <section class="container mx-auto px-4 py-12">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-2">Full Menu</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Explore our complete selection of authentic Buea cuisine and international favorites
+        </p>
+      </div>
+
+      <!-- Category Tabs -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8 border-b">
+        <button class="menu-tab active px-6 py-3 font-medium" data-category="recommended">
+          Chef's Recommendations
+        </button>
+        <button class="menu-tab px-6 py-3 font-medium" data-category="combos">
+          Combos & Meals
+        </button>
+        <button class="menu-tab px-6 py-3 font-medium" data-category="burgers">
+          Burgers & Sandwiches
+        </button>
+        <button class="menu-tab px-6 py-3 font-medium" data-category="local">
+          Local Specialties
+        </button>
+        <button class="menu-tab px-6 py-3 font-medium" data-category="sides">
+          Sides & Drinks
+        </button>
+        <button class="menu-tab px-6 py-3 font-medium" data-category="desserts">
+          Desserts
+        </button>
+      </div>
+
+      <!-- Category Content -->
+      <div id="menu-content">
+        <!-- Recommended Section -->
+        <div class="menu-category active" data-category="recommended">
+          <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <i class="fas fa-star text-yellow-400 mr-2"></i>
+            Chef's Recommendations
+          </h3>
+          <div class="grid md:grid-cols-2 gap-8" id="recommended-container">
+            <!-- Recommended items loaded via JS -->
+          </div>
+        </div>
+
+        <!-- Combos Section -->
+        <div class="menu-category hidden" data-category="combos">
+          <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <i class="fas fa-box text-red-500 mr-2"></i>
+            Combos & Meals
+          </h3>
+          <div class="grid md:grid-cols-2 gap-8" id="combos-container">
+            <!-- Combos loaded via JS -->
+          </div>
+        </div>
+        
+        <!-- Burgers Section -->
+        <div class="menu-category hidden" data-category="burgers">
+          <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <i class="fas fa-hamburger text-red-500 mr-2"></i>
+            Burgers & Sandwiches
+          </h3>
+          <div class="grid md:grid-cols-2 gap-8" id="burgers-container">
+            <!-- Burgers loaded via JS -->
+          </div>
+        </div>
+        
+        <!-- Local Specialties -->
+        <div class="menu-category hidden" data-category="local">
+          <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <i class="fas fa-flag text-green-500 mr-2"></i>
+            Local Specialties
+          </h3>
+          <div class="grid md:grid-cols-2 gap-8" id="local-container">
+            <!-- Local specialties loaded via JS -->
+          </div>
+        </div>
+        
+        <!-- Sides & Drinks -->
+        <div class="menu-category hidden" data-category="sides">
+          <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <i class="fas fa-french-fries text-yellow-500 mr-2"></i>
+            Sides & Drinks
+          </h3>
+          <div class="grid md:grid-cols-2 gap-8" id="sides-container">
+            <!-- Sides loaded via JS -->
+          </div>
+        </div>
+        
+        <!-- Desserts -->
+        <div class="menu-category hidden" data-category="desserts">
+          <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <i class="fas fa-ice-cream text-pink-500 mr-2"></i>
+            Desserts
+          </h3>
+          <div class="grid md:grid-cols-2 gap-8" id="desserts-container">
+            <!-- Desserts loaded via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seasonal Specials Banner -->
+    <section class="bg-gradient-to-r from-yellow-500 to-yellow-600 py-12">
+      <div class="container mx-auto px-4 text-center text-white">
+        <h2 class="text-3xl font-bold mb-4">Seasonal Specials</h2>
+        <p class="text-xl max-w-2xl mx-auto mb-6">
+          Try our limited-time seasonal creations - only available this month!
+        </p>
+        <button class="cta-secondary bg-white text-yellow-600 hover:bg-gray-100">
+          View Seasonal Menu
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white pt-12 pb-8">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h4 class="text-xl font-bold mb-4 flex items-center">
+            <i class="fas fa-utensils mr-2 text-red-500"></i>
+            KMC Restaurant
+          </h4>
+          <p class="text-gray-400">Bringing Buea's best flavors since 2015</p>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold mb-4">Contact</h4>
+          <ul class="space-y-2">
+            <li class="flex items-center">
+              <i class="fas fa-map-marker-alt mr-3 text-red-500"></i>
+              Buea Town, SW Region
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone-alt mr-3 text-red-500"></i>
+              (+237) 671-353-341
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold mb-4">Hours</h4>
+          <ul class="space-y-2">
+            <li>Mon-Fri: 8AM - 10PM</li>
+            <li>Saturday: 9AM - 11PM</li>
+            <li>Sunday: 10AM - 9PM</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold mb-4">Connect</h4>
+          <div class="flex space-x-4">
+            <a href="https://facebook.com/kmcrestaurant" class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://instagram.com/kmcrestaurant" class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://wa.me/237671353341" class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+        <p>&copy; 2024 KMC Restaurant. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a
+    href="https://wa.me/237671353341"
+    class="fixed bottom-4 right-4 bg-red-600 text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-colors"
+    aria-label="Chat on WhatsApp"
+  >
+    <i class="fab fa-whatsapp text-xl"></i>
+  </a>
+
+  <!-- Dish Detail Modal -->
+  <div id="dishModal" class="fixed inset-0 bg-black/80 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-auto">
+      <div class="p-6">
+        <button id="closeModal" class="text-2xl absolute top-4 right-4 hover:text-red-600">
+          &times;
+        </button>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <img id="modalImage" src="" alt="" class="w-full h-72 object-cover rounded-lg">
+          </div>
+          <div>
+            <h2 id="modalTitle" class="text-2xl font-bold mb-2"></h2>
+            <p id="modalPrice" class="text-red-600 font-bold text-xl mb-4"></p>
+            <p id="modalDescription" class="text-gray-600 mb-6"></p>
+            
+            <div class="mb-6">
+              <h3 class="font-bold mb-2">Ingredients:</h3>
+              <ul id="modalIngredients" class="list-disc pl-5 text-gray-600"></ul>
+            </div>
+            
+            <div class="mb-6">
+              <h3 class="font-bold mb-2">Customize:</h3>
+              <div class="space-y-3">
+                <div>
+                  <label class="font-medium">Spice Level:</label>
+                  <select class="w-full border rounded p-2 mt-1">
+                    <option>Mild</option>
+                    <option>Medium</option>
+                    <option>Spicy</option>
+                    <option>Extra Hot</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="font-medium">Extra Toppings (500 XAF each):</label>
+                  <div class="grid grid-cols-2 gap-2 mt-1">
+                    <label class="flex items-center">
+                      <input type="checkbox" class="mr-2">
+                      Cheese
+                    </label>
+                    <label class="flex items-center">
+                      <input type="checkbox" class="mr-2">
+                      Bacon
+                    </label>
+                    <label class="flex items-center">
+                      <input type="checkbox" class="mr-2">
+                      Avocado
+                    </label>
+                    <label class="flex items-center">
+                      <input type="checkbox" class="mr-2">
+                      Fried Egg
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <button class="cta-primary w-full add-to-cart-modal">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+  <script src="menu.js"></script>
+</body>
+</html>

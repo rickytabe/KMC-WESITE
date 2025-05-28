@@ -26,7 +26,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
 
-   <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css" />
 
     <!-- Favicon -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -39,16 +39,15 @@
 
     <!-- Custom Styles -->
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
       body {
-        font-family: 'Roboto', sans-serif;
+        font-family: "Roboto", sans-serif;
       }
     </style>
-
   </head>
   <body class="bg-gray-50">
     <!-- Navigation -->
-    <header class="sticky top-0 bg-white shadow-sm z-50">
+    <header class="sticky top-0 shadow-sm z-50 bg-red-200">
       <nav
         class="container mx-auto px-4 py-4 flex justify-between items-center"
       >
@@ -63,21 +62,28 @@
 
         <!-- Desktop Menu -->
         <div class="hidden md:flex space-x-8 text-lg">
-          <a href="/" class="nav-link group" data-path="/">
-            <i class="fas fa-home mr-2"></i>Home
+          <a href="/index.html" class="nav-link group" data-path="/index">
+            <i class="fas fa-home mr-2"></i>
+            <span>Home</span>
           </a>
-          <a href="/menu" class="nav-link group" data-path="/menu">
-            <i class="fas fa-book-open mr-2"></i>Menu
+
+          <a href="menu.html" class="nav-link group" data-path="/menu">
+            <i class="fas fa-book-open mr-2"></i>
+            <span>Menu</span>
           </a>
+
           <a
-            href="/reservations"
+            href="reservations.html"
             class="nav-link group"
             data-path="/reservations"
           >
-            <i class="fas fa-calendar-check mr-2"></i>Reservations
+            <i class="fas fa-calendar-check mr-2"></i>
+            <span>Reservations</span>
           </a>
-          <a href="/about" class="nav-link group" data-path="/about">
-            <i class="fas fa-info-circle mr-2"></i>About
+
+          <a href="about.html" class="nav-link group" data-path="/about">
+            <i class="fas fa-info-circle mr-2"></i>
+            <span>About</span>
           </a>
         </div>
 
@@ -112,7 +118,7 @@
           <a href="/" class="nav-link block py-2" data-path="/">
             <i class="fas fa-home mr-3"></i>Home
           </a>
-          <a href="/menu" class="nav-link block py-2" data-path="/menu">
+          <a href="menu.html" class="block py-2" data-path="/menu">
             <i class="fas fa-book-open mr-3"></i>Menu
           </a>
           <a
@@ -132,9 +138,10 @@
     <main>
       <!-- Hero Section -->
       <section class="relative h-[600px] flex items-center">
-
         <div class="absolute inset-0">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"
+          ></div>
           <img
             src="https://images.unsplash.com/photo-1550547660-d9450f859349"
             alt="KMC Restaurant interior"
@@ -147,7 +154,9 @@
           class="container mx-auto px-4 text-center relative z-10 text-white"
         >
           <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-header">
-            Taste <span class="bg-red-600 p-2 rounded-lg">Authentic</span> Buea's Flavors
+            Taste
+            <span class="bg-red-600 p-2 rounded-lg">Authentic</span> Buea's
+            Flavors
           </h1>
           <p class="text-xl mb-8 font-bold max-w-2xl mx-auto">
             Family recipes perfected since 2015
@@ -335,7 +344,7 @@
             width="600"
             height="100"
             class="w-full h-full"
-            style="border:0;"
+            style="border: 0"
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
