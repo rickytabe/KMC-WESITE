@@ -1,5 +1,5 @@
 
-// dishes-data.js
+// dishes-data.js5
 const dishes = [
   {
     id: 1,
@@ -215,7 +215,8 @@ class KMCRestaurant {
                         <span class="text-red-600 font-bold">${dish.price}</span>
                         <button class="cta-primary px-4 py-2 add-to-cart" 
                                 data-id="${dish.id}">
-                            Add to Cart
+                            Order Now
+                        <i class="fas fa-shopping-cart ml-2"></i>
                         </button>
                     </div>
                 </div>
