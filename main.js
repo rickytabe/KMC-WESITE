@@ -1,18 +1,3 @@
-// Toggle mobile menu
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-
-    if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenuBtn.setAttribute(
-                'aria-expanded',
-                mobileMenu.classList.contains('hidden') ? 'false' : 'true'
-            );
-        });
-    }
-});
 
 // dishes-data.js
 const dishes = [
