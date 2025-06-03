@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KMC Fast Food | Authentic Buea Cuisine & Burgers</title>
-    <meta
-      name="description"
-      content="Experience Buea's best fast food at KMC Restaurant. Family recipes since 2015. Book tables online, enjoy quick service & premium ingredients."
-    />
-
-    <!-- Preload critical resources -->
-    <link rel="preload" href="https://cdn.tailwindcss.com" as="script" />
-    <link
-      rel="preload"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      as="style"
-    />
-
-    <!-- Tailwind CSS -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - KMC Restaurant</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-
-    <link rel="stylesheet" href="styles.css" />
-
-    <!-- Favicon -->
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Custom Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#dc2626',
+                        secondary: '#f87171',
+                        dark: '#1f2937',
+                        light: '#f9fafb'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
-      body {
-        font-family: "Roboto", sans-serif;
-      }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .reservation-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+        .reservation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        .calendar-day:hover {
+            background-color: #fee2e2;
+        }
+        .calendar-day.selected {
+            background-color: #dc2626;
+            color: white;
+        }
     </style>
-  </head>
+    <link rel="stylesheet" href="/styles.css">
+</head>
   <body class="bg-gray-50">
     <!-- Navigation -->
     <header class="sticky top-0 shadow-sm z-50 bg-red-200">
@@ -122,13 +121,13 @@
             <i class="fas fa-book-open mr-3"></i>Menu
           </a>
           <a
-            href="/reservations"
+            href="/reservations.html"
             class="nav-link block py-2"
             data-path="/reservations"
           >
             <i class="fas fa-calendar-check mr-3"></i>Reservations
           </a>
-          <a href="/about" class="nav-link block py-2" data-path="/about">
+          <a href="/about.html" class="nav-link block py-2" data-path="/about">
             <i class="fas fa-info-circle mr-3"></i>About
           </a>
         </div>
@@ -162,7 +161,7 @@
             Family recipes perfected since 2015
           </p>
           <div class="flex flex-col md:flex-row justify-center gap-4">
-            <a href="/menu" class="cta-primary"> Explore Menu </a>
+            <a href="/menu.html" class="cta-primary"> Explore Menu </a>
             <a href="/reservations" class="cta-secondary"> Book Table </a>
           </div>
         </div>

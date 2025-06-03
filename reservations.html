@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations - KMC Restaurant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#dc2626',
+                        secondary: '#f87171',
+                        dark: '#1f2937',
+                        light: '#f9fafb'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .reservation-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+        .reservation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        .calendar-day:hover {
+            background-color: #fee2e2;
+        }
+        .calendar-day.selected {
+            background-color: #dc2626;
+            color: white;
+        }
+    </style>
+    <link rel="stylesheet" href="/styles.css"></link>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 shadow-sm z-50 bg-red-200">
+        <nav
+          class="container mx-auto px-4 py-4 flex justify-between items-center"
+        >
+          <a
+            href="/"
+            class="text-2xl font-bold text-red-600 flex items-center"
+            aria-label="KMC Home"
+          >
+            <i class="fas fa-utensils text-red-600 mr-2"></i>
+            KMC
+          </a>
+  
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex space-x-8 text-lg">
+            <a href="index.html" class="nav-link group" data-path="/index">
+              <i class="fas fa-home mr-2"></i>
+              <span>Home</span>
+            </a>
+  
+            <a href="menu.html" class="nav-link group" data-path="/menu">
+              <i class="fas fa-book-open mr-2"></i>
+              <span>Menu</span>
+            </a>
+  
+            <a
+              href="reservations.html"
+              class="nav-link group active"
+              data-path="/reservations"
+            >
+              <i class="fas fa-calendar-check mr-2"></i>
+              <span>Reservations</span>
+            </a>
+  
+            <a href="about.html" class="nav-link group" data-path="/about">
+              <i class="fas fa-info-circle mr-2"></i>
+              <span>About</span>
+            </a>
+          </div>
+  
+          <!-- Cart & Mobile Menu -->
+          <div class="flex items-center gap-6">
+            <button
+              id="cartButton"
+              class="text-gray-600 hover:text-red-600 relative"
+            >
+              <i class="fas fa-shopping-cart text-xl"></i>
+              <span
+                id="cartCount"
+                class="absolute -top-2 -right-3 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"
+                >0</span
+              >
+            </button>
+  
+            <button
+              id="mobileMenuBtn"
+              class="md:hidden text-gray-600"
+              aria-label="Open menu"
+              aria-expanded="false"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+        </nav>
+  
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
+          <div class="container mx-auto px-4 py-4 space-y-2">
+            <a href="/" class="nav-link block py-2" data-path="/">
+              <i class="fas fa-home mr-3"></i>Home
+            </a>
+            <a href="menu.html" class="block py-2" data-path="/menu">
+              <i class="fas fa-book-open mr-3"></i>Menu
+            </a>
+            <a
+              href="/reservations.html"
+              class="nav-link block py-2"
+              data-path="/reservations"
+            >
+              <i class="fas fa-calendar-check mr-3"></i>Reservations
+            </a>
+            <a href="/about" class="nav-link block py-2" data-path="/about">
+              <i class="fas fa-info-circle mr-3"></i>About
+            </a>
+          </div>
+        </div>
+      </header>
+    <!-- Hero Section -->
+    <section class="relative h-64 md:h-80 flex items-center justify-center ">
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+            <img
+              src="https://i.pinimg.com/736x/ed/a8/38/eda838c35a111bdae91bd8807bee0e8d.jpg"
+              alt="KMC Menu Background"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        <div class="relative z-20 text-center text-white px-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Make a Reservation</h1>
+            <p class="text-xl max-w-2xl mx-auto">Book your table for an unforgettable dining experience</p>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Reservation Form -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl shadow-lg reservation-card overflow-hidden">
+                        <div class="bg-primary text-white py-4 px-6">
+                            <h2 class="text-2xl font-bold">Book Your Table</h2>
+                            <p>Reserve in advance to guarantee your spot</p>
+                        </div>
+                        <div class="p-6">
+                            <form id="reservation-form">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Full Name</label>
+                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="John Doe" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Email Address</label>
+                                        <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="john@example.com" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Phone Number</label>
+                                        <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="+237 671 353 341" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Number of Guests</label>
+                                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option>1 person</option>
+                                            <option>2 people</option>
+                                            <option selected>3 people</option>
+                                            <option>4 people</option>
+                                            <option>5 people</option>
+                                            <option>6 people</option>
+                                            <option>7 people</option>
+                                            <option>8+ people (please specify)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 mb-2">Date & Time</label>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-gray-600 text-sm mb-1">Select Date</label>
+                                            <div class="relative">
+                                                <input type="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-gray-600 text-sm mb-1">Select Time</label>
+                                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                                <option>11:00 AM</option>
+                                                <option>12:00 PM</option>
+                                                <option>1:00 PM</option>
+                                                <option>2:00 PM</option>
+                                                <option>5:00 PM</option>
+                                                <option>6:00 PM</option>
+                                                <option>7:00 PM</option>
+                                                <option>8:00 PM</option>
+                                                <option>9:00 PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 mb-2">Special Requests</label>
+                                    <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" rows="4" placeholder="Do you have any special requests? (allergies, celebrations, etc.)"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="w-full py-4 bg-primary text-white rounded-lg font-bold text-lg hover:bg-red-700 transition-colors duration-300">
+                                    <i class="fas fa-calendar-check mr-2"></i> Confirm Reservation
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Information Panel -->
+                <div>
+                    <div class="bg-white rounded-xl shadow-lg reservation-card p-6 mb-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-info-circle text-primary mr-2"></i>
+                            Reservation Details
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-clock text-primary mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold">Opening Hours</h4>
+                                    <ul class="text-gray-600">
+                                        <li>Monday - Friday: 8AM - 10PM</li>
+                                        <li>Saturday: 9AM - 11PM</li>
+                                        <li>Sunday: 10AM - 9PM</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-users text-primary mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold">Group Bookings</h4>
+                                    <p class="text-gray-600">For parties of 8 or more, please call us directly at (+237) 671-353-341</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-calendar-day text-primary mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold">Special Events</h4>
+                                    <p class="text-gray-600">We accept reservations for birthdays, anniversaries, and corporate events</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg reservation-card overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-map-marker-alt text-primary mr-2"></i>
+                                Our Location
+                            </h3>
+                            
+                            <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden mb-4">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.745104829504!2d9.289860314761086!3d4.074938397055362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1061310c4a1b1a05%3A0x103b022538ca18e9!2sKMC%20ORIGINALLY%20BUEA!5e0!3m2!1sen!2sus!4v1657832345678!5m2!1sen!2sus" 
+                                    class="w-full h-64"
+                                    style="border:0;" 
+                                    allowfullscreen="" 
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                            
+                            <div class="text-gray-600">
+                                <p class="flex items-center mb-2">
+                                    <i class="fas fa-map-pin text-primary mr-2"></i>
+                                    Buea Town, SW Region, Cameroon
+                                </p>
+                                <p class="flex items-center mb-2">
+                                    <i class="fas fa-phone-alt text-primary mr-2"></i>
+                                    (+237) 671-353-341
+                                </p>
+                                <p class="flex items-center">
+                                    <i class="fas fa-envelope text-primary mr-2"></i>
+                                    info@kmcrestaurant.com
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">What Our Guests Say</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Hear from diners who've experienced our exceptional service</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah T." class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">Sarah T.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"The reservation process was seamless! We were seated immediately upon arrival and the staff made our anniversary celebration truly special."</p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael K." class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">Michael K.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Booked a table for 6 through their website. The confirmation came immediately and they even accommodated our request for a window seat!"</p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Aisha B." class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">Aisha B.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"I made a last-minute reservation for my parents' anniversary. The staff went above and beyond to make it memorable with a special dessert!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Frequently Asked Questions</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Find answers to common questions about reservations</p>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-question w-full text-left p-5 bg-white hover:bg-gray-50 font-medium flex justify-between items-center">
+                        How far in advance can I make a reservation?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer p-5 bg-gray-50 hidden">
+                        <p class="text-gray-600">You can make reservations up to 90 days in advance through our online system. For special events or large parties (8+ guests), we recommend booking at least 2 weeks ahead.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ 2 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-question w-full text-left p-5 bg-white hover:bg-gray-50 font-medium flex justify-between items-center">
+                        What is your cancellation policy?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer p-5 bg-gray-50 hidden">
+                        <p class="text-gray-600">We kindly ask that you cancel at least 24 hours in advance for parties of 1-6 guests. For larger parties (7+ guests), we require 48 hours notice. Cancellations can be made through our website or by calling the restaurant directly.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ 3 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-question w-full text-left p-5 bg-white hover:bg-gray-50 font-medium flex justify-between items-center">
+                        Do you accommodate dietary restrictions?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer p-5 bg-gray-50 hidden">
+                        <p class="text-gray-600">Absolutely! Please note any dietary restrictions or allergies in the "Special Requests" section when making your reservation. Our chefs will be happy to accommodate your needs and may contact you for more details if necessary.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ 4 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-question w-full text-left p-5 bg-white hover:bg-gray-50 font-medium flex justify-between items-center">
+                        Is there a dress code?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer p-5 bg-gray-50 hidden">
+                        <p class="text-gray-600">We maintain a smart casual dress code. We kindly ask guests to refrain from wearing beachwear, athletic wear, or flip-flops. Collared shirts and dress shoes for gentlemen are preferred but not required.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-utensils mr-2 text-primary"></i>
+                        KMC Restaurant
+                    </h4>
+                    <p class="text-gray-400">Bringing Buea's best flavors since 2015</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Menu</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Reservations</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Opening Hours</h4>
+                    <ul class="space-y-2">
+                        <li class="flex justify-between">
+                            <span>Monday - Friday</span>
+                            <span>8AM - 10PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Saturday</span>
+                            <span>9AM - 11PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sunday</span>
+                            <span>10AM - 9PM</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Info</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary"></i>
+                            <span class="text-gray-400">Buea Town, SW Region, Cameroon</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-primary"></i>
+                            <span class="text-gray-400">(+237) 671-353-341</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-primary"></i>
+                            <span class="text-gray-400">info@kmcrestaurant.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+                <p>&copy; 2023 KMC Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/237671353341" 
+       class="fixed bottom-6 right-6 w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-colors"
+       aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 p-8 text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-green-500 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Reservation Confirmed!</h3>
+            <p class="text-gray-600 mb-6">Your table has been successfully booked. We've sent a confirmation to your email.</p>
+            <div class="bg-gray-50 rounded-lg p-4 mb-6 text-left">
+                <p class="font-medium">Reservation Details:</p>
+                <p class="text-gray-600"><i class="fas fa-user mr-2"></i> <span id="res-name">John Doe</span></p>
+                <p class="text-gray-600"><i class="fas fa-calendar mr-2"></i> <span id="res-date">Friday, June 16, 2023</span></p>
+                <p class="text-gray-600"><i class="fas fa-clock mr-2"></i> <span id="res-time">7:00 PM</span></p>
+                <p class="text-gray-600"><i class="fas fa-users mr-2"></i> <span id="res-guests">3 people</span></p>
+            </div>
+            <button id="close-modal" class="w-full py-3 bg-primary text-white rounded-lg font-medium hover:bg-red-700">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                
+                if (answer.classList.contains('hidden')) {
+                    answer.classList.remove('hidden');
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                } else {
+                    answer.classList.add('hidden');
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+        
+        // Form Submission
+        document.getElementById('reservation-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = this.querySelector('input[type="text"]').value;
+            const date = new Date(this.querySelector('input[type="date"]').value);
+            const time = this.querySelector('select').value;
+            const guests = this.querySelector('select').value;
+            
+            // Format date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = date.toLocaleDateString('en-US', options);
+            
+            // Set confirmation details
+            document.getElementById('res-name').textContent = name;
+            document.getElementById('res-date').textContent = formattedDate;
+            document.getElementById('res-time').textContent = time;
+            document.getElementById('res-guests').textContent = guests;
+            
+            // Show modal
+            document.getElementById('confirmation-modal').classList.remove('hidden');
+        });
+        
+        // Close modal
+        document.getElementById('close-modal').addEventListener('click', function() {
+            document.getElementById('confirmation-modal').classList.add('hidden');
+        });
+        
+        // Set min date to today for date picker
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        document.querySelector('input[type="date"]').min = formattedDate;
+        
+        // Set default date to tomorrow
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
+        document.querySelector('input[type="date"]').value = tomorrowFormatted;
+    </script>
+    <script src="/main.js"></script>
+</body>
+</html>
